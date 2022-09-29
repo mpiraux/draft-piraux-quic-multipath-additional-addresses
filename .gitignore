@@ -17,7 +17,7 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-piraux-quic-multipath-additional-addresses.xml
+draft-piraux-quic-additional-addresses.xml
 package-lock.json
 report.xml
 !requirements.txt
