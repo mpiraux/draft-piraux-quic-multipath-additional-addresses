@@ -1,17 +1,17 @@
-# Additional addresses for Multipath QUIC
+# Additional addresses for QUIC
 
-This is the working area for the individual Internet-Draft, "Additional addresses for Multipath QUIC".
+This is the working area for the individual Internet-Draft, "Additional addresses for QUIC".
 
-* [Editor's Copy](https://mpiraux.github.io/draft-piraux-quic-multipath-additional-addresses/#go.draft-piraux-quic-multipath-additional-addresses.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-piraux-quic-multipath-additional-addresses)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-piraux-quic-multipath-additional-addresses)
-* [Compare Editor's Copy to Individual Draft](https://mpiraux.github.io/draft-piraux-quic-multipath-additional-addresses/#go.draft-piraux-quic-multipath-additional-addresses.diff)
+* [Editor's Copy](https://mpiraux.github.io/draft-piraux-quic-additional-addresses/#go.draft-piraux-quic-additional-addresses.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-piraux-quic-additional-addresses)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-piraux-quic-additional-addresses)
+* [Compare Editor's Copy to Individual Draft](https://mpiraux.github.io/draft-piraux-quic-additional-addresses/#go.draft-piraux-quic-additional-addresses.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/mpiraux/draft-piraux-quic-multipath-additional-addresses/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/mpiraux/draft-piraux-quic-additional-addresses/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
