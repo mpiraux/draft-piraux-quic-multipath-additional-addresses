@@ -1,9 +1,9 @@
 ---
 title: "Additional addresses for Multipath QUIC"
 abbrev: "MP-QUIC Add. Addresses"
-category: experimental
+category: exp
 
-docname: draft-piraux-quic-multipath-additional-addresses
+docname: draft-piraux-quic-multipath-additional-addresses-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
 number:
 date:
@@ -15,13 +15,13 @@ keyword:
  - multipath
  - quic
  - address
-#venue:
-#  group: WG
-#  type: Working Group
-#  mail: WG@example.com
-#  arch: https://example.com/WG
-#  github: USER/REPO
-#  latest: https://example.com/LATEST
+venue:
+  group: "QUIC"
+  type: "Working Group"
+  mail: "quic@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/quic/"
+  github: "mpiraux/draft-piraux-quic-multipath-additional-addresses"
+  latest: ""
 
 author:
  -
@@ -32,7 +32,7 @@ author:
 normative:
   RFC2119:
   QUIC-TRANSPORT: rfc9000
-  MULTIPATH-QUIC: draft-ietf-quic-multipath
+  MULTIPATH-QUIC: I-D.ietf-quic-multipath
 
 informative:
 
