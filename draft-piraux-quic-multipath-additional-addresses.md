@@ -9,8 +9,8 @@ number:
 date:
 consensus: true
 v: 3
-area: Transport
-workgroup: QUIC Working Group
+area: "Transport"
+workgroup: "QUIC"
 keyword:
  - multipath
  - quic
@@ -21,7 +21,7 @@ venue:
   mail: "quic@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/quic/"
   github: "mpiraux/draft-piraux-quic-multipath-additional-addresses"
-  latest: ""
+  latest: "https://mpiraux.github.io/draft-piraux-quic-multipath-additional-addresses/draft-piraux-quic-multipath-additional-addresses.html"
 
 author:
  -
