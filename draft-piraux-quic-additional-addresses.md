@@ -47,8 +47,21 @@ to advertise additional addresses that can be used for a QUIC connection.
 
 # Introduction
 
-TODO Introduction
+The QUIC protocol specifies several techniques for network path migration.
+The client can migrate from one of its local addresses to another at any time
+after the handshake using connection migration. The server can transfer a
+connection to one of its addresses shortly after the handshake by using the
+preferred_address transport parameter. However, it cannot advertise additional
+addresses that a client may use.
 
+This limitation impacts several scenarios. For instance, a multihomed server
+that has access to several subnets cannot advertise all its addresses. A
+dual-stack server cannot advertise its other address so that a client losing
+the address family used to establish the connection can migrate to the other
+address family.
+
+This document proposes a QUIC Transport Parameter enabling a QUIC server
+to advertise additional addresses that can be used for a QUIC connection.
 
 # Conventions and Definitions
 
@@ -64,6 +77,46 @@ client can use these addresses to establish new network paths.
 
 When sending packets to a new server address, the client MUST validate the
 address using Path Validation as described in {{Section 8.2 of QUIC-TRANSPORT}}.
+When Preferred Adress and Additional Addresses are use together, the client
+SHOULD NOT migrate to an additional address before acting on the preferred
+address indicated by the server.
+
+## Example of use
+
+{{fig-example}} illustrates an example of use for Additional Addresses when
+involved in a QUIC deployment featuring a load balancer making uses of the
+Preferred Address mechanism.
+
+First, the client sends its Initial packet to the load balancer, which forwards
+it to the first server IP. The server answers to the QUIC connection opening
+and indicates its first IP as a preferred address and its second one as an
+additional address. When the handshake completes, the client validates the
+preferred address and migrates to it. Later on in the connection, the client
+can validate the path towards the second server IP and can migrate to it.
+
+~~~~
+Client            Load-balancer         Server @ IP a   Server @ IP b
+|                      |                      |               |
+|       Initial[0]: CRYPTO(CH)                |               |
+|---------------------/F/-------------------->|               |
+                             ....
+| Handshake[0]: CRYPTO(EE(Pr.Addr=a,A.Addr=b)]|               |
+|<--------------------/F/---------------------|               |
+                             ....
+|       Handshake[0]: CRYPTO(Fin)             |               |
+|---------------------/F/-------------------->|               |
+|    /* Migration to Preferred Address a */   |               |
+|-------------------------------------------->|               |
+                             ....
+|                      |                      |
+|                      |                      .               |
+| 1-RTT[1]: PATH_CHALLENGE  /* Migration to Add. Address b */ |
+|------------------------------------------------------------>|
+|                                   1-RTT[1]: PATH_RESPONSE   |
+|<------------------------------------------------------------|
+|                                                             |
+~~~~
+{: #fig-example title="A server reached through a LB uses Add. Address"}
 
 # Additional Addresses Transport Parameter
 
