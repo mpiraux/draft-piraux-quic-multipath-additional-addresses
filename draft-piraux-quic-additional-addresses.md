@@ -75,7 +75,7 @@ be used by the client to migrate to a new server address at any time after
 the handshake. When {{MULTIPATH-QUIC}} is used over a QUIC connection, the
 client can use these addresses to establish new network paths.
 
-When sending packets to a new server address, the client MUST validate the
+When sending packets to a new server address, the client validates the
 address using Path Validation as described in {{Section 8.2 of QUIC-TRANSPORT}}.
 When Preferred Adress and Additional Addresses are use together, the client
 SHOULD NOT migrate to an additional address before acting on the preferred
@@ -115,6 +115,8 @@ Client            Load-balancer         Server @ IP a   Server @ IP b
 |                                   1-RTT[1]: PATH_RESPONSE   |
 |<------------------------------------------------------------|
 |                                                             |
+                                                Legend
+                                                  /F/ Forwarded by LB
 ~~~~
 {: #fig-example title="A server reached through a LB uses Add. Address"}
 
@@ -189,4 +191,5 @@ TBD (experiments use 0xadda) | addition_addresses  | {{additional-addresses-tran
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+We thank Quentin De Coninck and François Michel for their feedback and
+comments on the first version of this document.
