@@ -27,6 +27,9 @@ author:
     fullname: Maxime Piraux
     organization: UCLouvain
     email: maxime.piraux@uclouvain.be
+ -  fullname: Olivier Bonaventure
+    organization: UCLouvain
+    email: olivier.bonaventure@uclouvain.be
 
 normative:
   RFC2119:
@@ -73,11 +76,11 @@ The additional_addresses transport parameter proposed in this document enables
 a QUIC server to securely advertise additional addresses. These addresses can
 be used by the client to migrate to a new server address at any time after
 the handshake. When {{MULTIPATH-QUIC}} is used over a QUIC connection, the
-client can use these addresses to establish new network paths.
+client can use these addresses to establish additional network paths.
 
 When sending packets to a new server address, the client validates the
 address using Path Validation as described in {{Section 8.2 of QUIC-TRANSPORT}}.
-When Preferred Adress and Additional Addresses are use together, the client
+When Preferred Adress and Additional Addresses are used together, the client
 SHOULD NOT migrate to an additional address before acting on the preferred
 address indicated by the server.
 
@@ -91,7 +94,7 @@ First, the client sends its Initial packet to the load balancer, which forwards
 it to the first server IP. The server answers to the QUIC connection opening
 and indicates its first IP as a preferred address and its second one as an
 additional address. When the handshake completes, the client validates the
-preferred address and migrates to it. Later on in the connection, the client
+preferred address and migrates to it. Later during the connection, the client
 can validate the path towards the second server IP and can migrate to it.
 
 ~~~~
@@ -122,12 +125,12 @@ Client            Load-balancer         Server @ IP a   Server @ IP b
 
 # Additional Addresses Transport Parameter
 
-The following transport parameters is defined:
+The following transport parameter is defined:
 
 additional_addresses (TBD - experiments use 0xadda):
 
 : A list of server addresses that the client can migrate the connection to.
-This transport parameter is only sent by a server.
+This transport parameter MUST NOT be sent by a client.
 
 ~~~
 Additional Addresses {
@@ -163,9 +166,9 @@ IP Port:
 
 This document specifies a mechanism allowing servers to influence the
 IP addresses towards which clients send QUIC packets. In this case,
-an attacker can cause a client to send packets to a victim. A countermeasure
-similar to {{Section 21.5.3 of QUIC-TRANSPORT}} is to limit the packets that
-can be sent to a non-validated additional addresses.
+a malicious server could cause a client to send packets to a victim. A
+countermeasure similar to {{Section 21.5.3 of QUIC-TRANSPORT}} is to limit
+the packets that can be sent to a non-validated additional addresses.
 
 A client MUST NOT send non-probing frames to an additional address prior to
 validating that address. The generic measures described in {{Section 21.5.6 of QUIC-TRANSPORT}}
