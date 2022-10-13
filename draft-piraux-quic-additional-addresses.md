@@ -58,10 +58,13 @@ preferred_address transport parameter. However, it cannot advertise additional
 addresses that a client may use.
 
 This limitation impacts several scenarios. For instance, a multihomed server
-that has access to several subnets cannot advertise all its addresses. A
-dual-stack server cannot advertise its other address so that a client losing
-the address family used to establish the connection can migrate to the other
-address family.
+that has access to several subnets cannot advertise all its addresses.
+In entreprise deployments where provider-assigned IPv6 Addresses are used to
+solve the multihoming problem {{RFC8678}}, announcing several server addresses
+enables applications using QUIC to recover from provider failures.
+Also, a dual-stack server cannot advertise its other address so that a client
+losing the address family used to establish the connection can migrate to the
+other address family.
 
 This document proposes a QUIC Transport Parameter enabling a QUIC server
 to advertise additional addresses that can be used for a QUIC connection.
