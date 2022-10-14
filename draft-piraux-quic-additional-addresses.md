@@ -53,9 +53,9 @@ to advertise additional addresses that can be used for a QUIC connection.
 The QUIC protocol specifies several techniques for network path migration.
 The client can migrate from one of its local addresses to another at any time
 after the handshake using connection migration. The server can transfer a
-connection to one of its addresses shortly after the handshake by using the
-preferred_address transport parameter. However, it cannot advertise additional
-addresses that a client may use.
+connection to one of its other addresses shortly after the handshake by using
+the preferred_address transport parameter. However, it cannot advertise
+additional addresses that a client may use.
 
 This limitation impacts several scenarios. For instance, a multihomed server
 that has access to several subnets cannot advertise all its addresses.
@@ -89,9 +89,9 @@ address indicated by the server.
 
 ## Example of use
 
-{{fig-example}} illustrates an example of use for Additional Addresses when
-involved in a QUIC deployment featuring a load balancer making uses of the
-Preferred Address mechanism.
+{{fig-example}} illustrates an example of use for Additional Addresses in a
+QUIC deployment featuring a load balancer and a multihomed server
+making use of the Preferred Address mechanism.
 
 First, the client sends its Initial packet to the load balancer, which forwards
 it to the first server IP. The server answers to the QUIC connection opening
@@ -171,7 +171,7 @@ This document specifies a mechanism allowing servers to influence the
 IP addresses towards which clients send QUIC packets. In this case,
 a malicious server could cause a client to send packets to a victim. A
 countermeasure similar to {{Section 21.5.3 of QUIC-TRANSPORT}} is to limit
-the packets that can be sent to a non-validated additional addresses.
+the packets that are sent to a non-validated additional addresses.
 
 A client MUST NOT send non-probing frames to an additional address prior to
 validating that address. The generic measures described in {{Section 21.5.6 of QUIC-TRANSPORT}}
