@@ -42,7 +42,7 @@ informative:
 
 --- abstract
 
-This document specifies a QUIC Transport Parameter enabling a QUIC server
+This document specifies a QUIC frame enabling a QUIC server
 to advertise additional addresses that can be used for a QUIC connection.
 
 --- middle
@@ -65,8 +65,9 @@ Also, a dual-stack server cannot advertise its other address so that a client
 losing the address family used to establish the connection can migrate to the
 other address family.
 
-This document proposes a QUIC Transport Parameter enabling a QUIC server
-to advertise additional addresses that can be used for a QUIC connection.
+This document proposes a QUIC frame and a QUIC transport parameter enabling
+a QUIC server to advertise additional addresses that can be used for a QUIC
+connection.
 
 # Conventions and Definitions
 
@@ -74,11 +75,15 @@ to advertise additional addresses that can be used for a QUIC connection.
 
 # Overview
 
-The additional_addresses transport parameter proposed in this document enables
-a QUIC server to securely advertise additional addresses. These addresses can
-be used by the client to migrate to a new server address at any time after
-the handshake. When {{MULTIPATH-QUIC}} is used over a QUIC connection, the
-client can use these addresses to establish additional network paths.
+The ADDITIONAL_ADDRESSES frame proposed in this document enables
+a QUIC server to securely advertise additional addresses. The Additional
+Addresses transport parameter enables a QUIC client to indicate support for
+this frame.
+
+These addresses can be used by the client to migrate to a new server address
+at any time after the handshake. When {{MULTIPATH-QUIC}} is used over a QUIC
+connection, the client can use these addresses to establish additional network
+paths.
 
 When sending packets to a new server address, the client validates the
 address using Path Validation as described in {{Section 8.2 of QUIC-TRANSPORT}}.
@@ -88,11 +93,11 @@ address indicated by the server.
 
 ## Example of use
 
-{{fig-example}} illustrates an example of use for Additional Addresses in a
+{{fig-example}} illustrates an example of use for ADDITIONAL_ADDRESSES in a
 QUIC deployment featuring a load balancer and a multihomed server
 making use of the Preferred Address mechanism.
 
-First, the client sends its Initial packet to the load balancer, which forwards
+First, the client sends its Initial packet indicating support for this extension to the load balancer, which forwards
 it to the first server IP. The server answers to the QUIC connection opening
 and indicates its first IP as a preferred address and its second one as an
 additional address. When the handshake completes, the client validates the
@@ -102,10 +107,12 @@ can validate the path towards the second server IP and can migrate to it.
 ~~~~
 Client            Load-balancer         Server @ IP a   Server @ IP b
 |                      |                      |               |
-|       Initial[0]: CRYPTO(CH)                |               |
+|       Initial[0]: CRYPTO(CH(Add.Addr))      |               |
 |---------------------/F/-------------------->|               |
                              ....
-| Handshake[0]: CRYPTO(EE(Pr.Addr=a,A.Addr=b)]|               |
+|      Handshake[0]: CRYPTO(EE(Pr.Addr=a),..) |               |
+|<--------------------/F/---------------------|               |
+|          1-RTT[0]: ADDITIONAL_ADDRESSES([b])|               |
 |<--------------------/F/---------------------|               |
                              ....
 |       Handshake[0]: CRYPTO(Fin)             |               |
@@ -115,15 +122,15 @@ Client            Load-balancer         Server @ IP a   Server @ IP b
                              ....
 |                      |                      |
 |                      |                      .               |
-| 1-RTT[1]: PATH_CHALLENGE  /* Migration to Add. Address b */ |
+| 1-RTT[X]: PATH_CHALLENGE  /* Migration to Add. Address b */ |
 |------------------------------------------------------------>|
-|                                   1-RTT[1]: PATH_RESPONSE   |
+|                                   1-RTT[Y]: PATH_RESPONSE   |
 |<------------------------------------------------------------|
 |                                                             |
                                                 Legend
                                                   /F/ Forwarded by LB
 ~~~~
-{: #fig-example title="A server reached through a LB uses Add. Address"}
+{: #fig-example title="A server reached through a load-balancer uses Add. Address"}
 
 # Additional Addresses Transport Parameter
 
@@ -131,15 +138,22 @@ The following transport parameter is defined:
 
 additional_addresses (TBD - experiments use 0x925addaXX):
 
-: A list of server addresses that the client can migrate the connection to.
-This transport parameter MUST NOT be sent by a client.
+: Indicates the support of the ADDITIONAL_ADDRESSES frame as defined in the -XX draft version of this document. This transport parameter MUST NOT be sent by a server.
+
+# ADDITIONAL_ADDRESSES Frames
+
+The server uses an ADDITIONAL_ADDRESSES frame (type=TBD - experiments use 0x925addaXX)
+to advertise the additional addresses that a client can use to reach it.
+This frame MUST NOT be sent by a client.
 
 ~~~
 Additional Addresses {
+  Type (i) = TBD,
+  Additional Addresses Count (i),
   Additional Address (..) ...,
 }
 ~~~
-{: #fig-additional-addresses title="Additional Addresses Format"}
+{: #fig-additional-addresses title="ADDITIONAL_ADDRESSES Frame Format"}
 
 ~~~
 Additional Address {
@@ -178,12 +192,13 @@ also remain applicable for further mitigation.
 
 # IANA Considerations
 
-This document defines a new transport parameter for advertising additional addresses.
-The draft defines a provisional identifier for experiments. IANA will allocate
-the final identifier.
+This document defines a new transport parameter for indicating support for
+additional addresses.
+The draft defines provisional identifiers for experiments. IANA will allocate
+the final identifiers.
 
 The following entry in {{transport-parameters}} should be added to
-the "QUIC Transport Parameters" registry under the "QUIC Protocol" heading.
+the "QUIC Transport Parameters" registry under the "QUIC" heading.
 
 Value                        | Parameter Name.     | Specification
 -----------------------------|---------------------|-----------------
@@ -194,6 +209,15 @@ The last byte of the experimental transport parameter ID is used by
 implementations to indicate the version of this document they support.
 For instance, the value 0x925adda01 indicates the support of the -01 version
 of this document.
+
+The following entry in {{transport-parameters}} should be added to
+the "QUIC Frame Types" registry under the "QUIC" heading.
+
+Value                        | Frame Type Name     | Specification
+-----------------------------|---------------------|-----------------
+TBD (experiments use 0x925addaXX) | ADDITIONAL_ADDRESSES  | {{additional-addresses-transport-parameter}}
+{: #quic-frames title="Addition to QUIC Frame Types Entries"}
+
 
 --- back
 
