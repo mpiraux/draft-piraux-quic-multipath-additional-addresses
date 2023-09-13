@@ -34,7 +34,6 @@ author:
 normative:
   RFC2119:
   QUIC-TRANSPORT: rfc9000
-  QUIC-TLS: rfc9001
 
 informative:
   MULTIPATH-QUIC: I-D.ietf-quic-multipath
@@ -130,7 +129,7 @@ Client            Load-balancer         Server @ IP a   Server @ IP b
 
 The following transport parameter is defined:
 
-additional_addresses (TBD - experiments use 0xadda):
+additional_addresses (TBD - experiments use 0x925addaXX):
 
 : A list of server addresses that the client can migrate the connection to.
 This transport parameter MUST NOT be sent by a client.
@@ -188,9 +187,13 @@ the "QUIC Transport Parameters" registry under the "QUIC Protocol" heading.
 
 Value                        | Parameter Name.     | Specification
 -----------------------------|---------------------|-----------------
-TBD (experiments use 0xadda) | addition_addresses  | {{additional-addresses-transport-parameter}}
+TBD (experiments use 0x925addaXX) | addition_addresses  | {{additional-addresses-transport-parameter}}
 {: #transport-parameters title="Addition to QUIC Transport Parameters Entries"}
 
+The last byte of the experimental transport parameter ID is used by
+implementations to indicate the version of this document they support.
+For instance, the value 0x925adda01 indicates the support of the -01 version
+of this document.
 
 --- back
 
