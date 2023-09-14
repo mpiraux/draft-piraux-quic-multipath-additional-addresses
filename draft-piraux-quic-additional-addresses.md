@@ -93,16 +93,18 @@ address indicated by the server.
 
 ## Example of use
 
-{{fig-example}} illustrates an example of use for ADDITIONAL_ADDRESSES in a
+{{fig-example}} illustrates an example of use for Additional Addresses in a
 QUIC deployment featuring a load balancer and a multihomed server
 making use of the Preferred Address mechanism.
 
-First, the client sends its Initial packet indicating support for this extension to the load balancer, which forwards
-it to the first server IP. The server answers to the QUIC connection opening
-and indicates its first IP as a preferred address and its second one as an
-additional address. When the handshake completes, the client validates the
-preferred address and migrates to it. Later during the connection, the client
-can validate the path towards the second server IP and can migrate to it.
+First, the client sends its Initial packet to the load balancer, which forwards
+it to the first server IP. The client indicates support for this extension by
+using the dedicated transport parameter. The server answers to the QUIC
+connection opening and indicates its first IP as a preferred address and its
+second one as an additional address using the dedicated frame. When the
+handshake completes, the client validates the preferred address and migrates
+to it. Later during the connection, the client can validate the path towards
+the second server IP and can migrate to it.
 
 ~~~~
 Client            Load-balancer         Server @ IP a   Server @ IP b
@@ -155,6 +157,11 @@ Additional Addresses {
 ~~~
 {: #fig-additional-addresses title="ADDITIONAL_ADDRESSES Frame Format"}
 
+Additional Addresses Count:
+
+: A variable-length integer indicating the number of additional addresses in
+the frame.
+
 ~~~
 Additional Address {
   Address Version (8),
@@ -166,7 +173,7 @@ Additional Address {
 
 Address Version:
 
-: A 8-bit value identifying the Internet address version of this address. The
+: An 8-bit value identifying the Internet address version of this address. The
 value 4 indicates IPv4 while 6 indicates IPv6.
 
 IP Address:
@@ -178,6 +185,11 @@ IP Port:
 
 : A 16-bit value representing the port to use with this IP Address.
 
+The server can update the client on its additional addresses at any time by
+sending an ADDITIONAL_ADDRESSES frame. When a client is using one of these
+additional addresses and receives an ADDITIONAL_ADDRESSES frame not containing
+this address, it MAY stop using it in favor of another address.
+
 # Security Considerations
 
 This document specifies a mechanism allowing servers to influence the
@@ -185,6 +197,11 @@ IP addresses towards which clients send QUIC packets. In this case,
 a malicious server could cause a client to send packets to a victim. A
 countermeasure similar to {{Section 21.5.3 of QUIC-TRANSPORT}} is to limit
 the packets that are sent to a non-validated additional addresses.
+
+Given that a server can provide additional addresses at any point in time, a
+malicious server could overload a client and direct it against many addresses.
+To alleviate this, a client can choose to limit the number of addresses it
+keeps track of and the frequency at which it considers them.
 
 A client MUST NOT send non-probing frames to an additional address prior to
 validating that address. The generic measures described in {{Section 21.5.6 of QUIC-TRANSPORT}}
