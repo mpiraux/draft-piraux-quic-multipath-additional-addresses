@@ -25,10 +25,10 @@ venue:
 author:
  -
     fullname: Maxime Piraux
-    organization: UCLouvain
+    organization: UCLouvain, WEL RI
     email: maxime.piraux@uclouvain.be
  -  fullname: Olivier Bonaventure
-    organization: UCLouvain
+    organization: UCLouvain, WEL RI
     email: olivier.bonaventure@uclouvain.be
 
 normative:
