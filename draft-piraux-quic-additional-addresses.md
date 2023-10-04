@@ -188,7 +188,7 @@ IP Port:
 The server can update the client on its additional addresses at any time by
 sending an ADDITIONAL_ADDRESSES frame. When a client is using one of these
 additional addresses and receives an ADDITIONAL_ADDRESSES frame not containing
-this address, it MAY stop using it in favor of another address.
+this address, it SHOULD stop using it in favor of another address.
 
 # Security Considerations
 
