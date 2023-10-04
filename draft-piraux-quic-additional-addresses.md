@@ -219,7 +219,7 @@ the "QUIC Transport Parameters" registry under the "QUIC" heading.
 
 Value                        | Parameter Name.     | Specification
 -----------------------------|---------------------|-----------------
-TBD (experiments use 0x925addaXX) | addition_addresses  | {{additional-addresses-transport-parameter}}
+TBD (experiments use 0x925addaXX) | additional_addresses  | {{additional-addresses-transport-parameter}}
 {: #transport-parameters title="Addition to QUIC Transport Parameters Entries"}
 
 The last byte of the experimental transport parameter ID is used by
@@ -235,6 +235,10 @@ Value                        | Frame Type Name     | Specification
 TBD (experiments use 0x925addaXX) | ADDITIONAL_ADDRESSES  | {{additional-addresses-transport-parameter}}
 {: #quic-frames title="Addition to QUIC Frame Types Entries"}
 
+The last byte of the experimental frame type is used by
+implementations to indicate the version of this document they support.
+For instance, the value 0x925adda01 indicates the support of the -01 version
+of this document.
 
 --- back
 
