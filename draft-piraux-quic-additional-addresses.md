@@ -146,7 +146,7 @@ additional_addresses (TBD - experiments use 0x925addaXX):
 
 The server uses an ADDITIONAL_ADDRESSES frame (type=TBD - experiments use 0x925addaXX)
 to advertise the additional addresses that a client can use to reach it.
-This frame MUST NOT be sent by a client.
+This frame MUST NOT be sent by a client and can only appear in 1-RTT packets.
 
 ~~~
 Additional Addresses {
