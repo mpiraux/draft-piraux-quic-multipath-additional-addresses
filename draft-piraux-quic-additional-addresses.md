@@ -25,10 +25,10 @@ venue:
 author:
  -
     fullname: Maxime Piraux
-    organization: UCLouvain, WEL RI
+    organization: UCLouvain & WEL RI
     email: maxime.piraux@uclouvain.be
  -  fullname: Olivier Bonaventure
-    organization: UCLouvain, WEL RI
+    organization: UCLouvain & WEL RI
     email: olivier.bonaventure@uclouvain.be
 
 normative:
@@ -151,11 +151,20 @@ This frame MUST NOT be sent by a client and can only appear in 1-RTT packets.
 ~~~
 Additional Addresses {
   Type (i) = TBD,
+  Sequence Number (i),
   Additional Addresses Count (i),
   Additional Address (..) ...,
 }
 ~~~
 {: #fig-additional-addresses title="ADDITIONAL_ADDRESSES Frame Format"}
+
+Sequence Number:
+
+: A variable-length integer indicating the sequence of the frame. The number is
+monotonically increasing within a QUIC connection and is chosen by the sender.
+It helps the receiver to order ADDITIONAL_ADDRESSES frames by recency. A
+receiver SHOULD ignore frames with a Sequence Number lower or equal to the
+highest Sequence Number received.
 
 Additional Addresses Count:
 
@@ -184,6 +193,11 @@ long while IPv6 addresses are 128-bit long.
 IP Port:
 
 : A 16-bit value representing the port to use with this IP Address.
+
+The ADDITIONAL_ADDRESSES frame is ack-eliciting. When a packet containing an
+ADDITIONAL_ADDRESSES frame is lost and its content is still relevant, the sender
+MAY retransmit the frame as is. Otherwise, sending a new frame with a new
+Sequence number is preferred.
 
 The server can update the client on its additional addresses at any time by
 sending an ADDITIONAL_ADDRESSES frame. When a client is using one of these
