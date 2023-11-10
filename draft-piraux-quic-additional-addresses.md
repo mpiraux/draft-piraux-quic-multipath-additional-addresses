@@ -107,18 +107,18 @@ to it. Later during the connection, the client can validate the path towards
 the second server IP and can migrate to it.
 
 ~~~~
-Client            Load-balancer         Server @ IP a   Server @ IP b
+Client       Load-balancer @ IP lb        Server @ IP a   Server @ IP b
 |                      |                      |               |
 |       Initial[0]: CRYPTO(CH(Add.Addr))      |               |
-|---------------------/F/-------------------->|               |
+|--------------------->|--------------------->|               |
                              ....
 |      Handshake[0]: CRYPTO(EE(Pr.Addr=a),..) |               |
-|<--------------------/F/---------------------|               |
+|<---------------------|<---------------------|               |
 |          1-RTT[0]: ADDITIONAL_ADDRESSES([b])|               |
-|<--------------------/F/---------------------|               |
+|<---------------------|<---------------------|               |
                              ....
 |       Handshake[0]: CRYPTO(Fin)             |               |
-|---------------------/F/-------------------->|               |
+|--------------------->|--------------------->|               |
 |    /* Migration to Preferred Address a */   |               |
 |-------------------------------------------->|               |
                              ....
@@ -129,10 +129,8 @@ Client            Load-balancer         Server @ IP a   Server @ IP b
 |                                   1-RTT[Y]: PATH_RESPONSE   |
 |<------------------------------------------------------------|
 |                                                             |
-                                                Legend
-                                                  /F/ Forwarded by LB
 ~~~~
-{: #fig-example title="A server reached through a load-balancer uses Add. Address"}
+{: #fig-example title="A server reached through a load-balancer uses Add. Addresses"}
 
 # Additional Addresses Transport Parameter
 
@@ -140,7 +138,7 @@ The following transport parameter is defined:
 
 additional_addresses (TBD - experiments use 0x925addaXX):
 
-: Indicates the support of the ADDITIONAL_ADDRESSES frame as defined in the -XX draft version of this document. This transport parameter MUST NOT be sent by a server.
+: Indicates the support of the ADDITIONAL_ADDRESSES frame as defined in the -XX draft version of this document. This transport parameter has a zero-length value. It MUST NOT be sent by a server.
 
 # ADDITIONAL_ADDRESSES Frames
 
@@ -261,3 +259,6 @@ of this document.
 
 We thank Quentin De Coninck and François Michel for their feedback and
 comments on the first version of this document.
+
+We thank Marcel Kempf, Moritz Buhl, Louis Navarre and François Michel for
+joining the interop during the IETF 118 Hackathon.
