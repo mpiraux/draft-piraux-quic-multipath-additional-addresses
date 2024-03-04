@@ -114,7 +114,7 @@ Client       Load-balancer @ IP lb        Server @ IP a   Server @ IP b
                              ....
 |      Handshake[0]: CRYPTO(EE(Pr.Addr=a),..) |               |
 |<---------------------|<---------------------|               |
-|          1-RTT[0]: ADDITIONAL_ADDRESSES([b])|               |
+|         1-RTT[0]: ADDITIONAL_ADDRESSES([b]) |               |
 |<---------------------|<---------------------|               |
                              ....
 |       Handshake[0]: CRYPTO(Fin)             |               |
