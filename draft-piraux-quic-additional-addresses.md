@@ -122,8 +122,8 @@ Client       Load-balancer @ IP lb        Server @ IP a   Server @ IP b
 |    /* Migration to Preferred Address a */   |               |
 |-------------------------------------------->|               |
                              ....
-|                      |                      |
-|                      |                      .               |
+|                      .                      |
+|                                             .               |
 | 1-RTT[X]: PATH_CHALLENGE  /* Migration to Add. Address b */ |
 |------------------------------------------------------------>|
 |                                   1-RTT[Y]: PATH_RESPONSE   |
