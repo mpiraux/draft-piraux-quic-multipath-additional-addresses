@@ -5,7 +5,7 @@
 QUIC                                                           M. Piraux
 Internet-Draft                                            O. Bonaventure
 Intended status: Experimental                         UCLouvain & WEL RI
-Expires: 5 September 2024                                   4 March 2024
+Expires: 24 April 2025                                   21 October 2024
 
 
                      Additional addresses for QUIC
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2024.
+   This Internet-Draft will expire on 24 April 2025.
 
 Copyright Notice
 
@@ -163,8 +163,8 @@ Table of Contents
  |    /* Migration to Preferred Address a */   |               |
  |-------------------------------------------->|               |
                               ....
- |                      |                      |
- |                      |                      .               |
+ |                      .                      |
+ |                                             .               |
  | 1-RTT[X]: PATH_CHALLENGE  /* Migration to Add. Address b */ |
  |------------------------------------------------------------>|
  |                                   1-RTT[Y]: PATH_RESPONSE   |
@@ -325,9 +325,9 @@ Table of Contents
    [MULTIPATH-QUIC]
               Liu, Y., Ma, Y., De Coninck, Q., Bonaventure, O., Huitema,
               C., and M. Kühlewind, "Multipath Extension for QUIC", Work
-              in Progress, Internet-Draft, draft-ietf-quic-multipath-06,
-              23 October 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-quic-multipath-06>.
+              in Progress, Internet-Draft, draft-ietf-quic-multipath-10,
+              8 July 2024, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-quic-multipath-10>.
 
    [RFC8678]  Baker, F., Bowers, C., and J. Linkova, "Enterprise
               Multihoming using Provider-Assigned IPv6 Addresses without
